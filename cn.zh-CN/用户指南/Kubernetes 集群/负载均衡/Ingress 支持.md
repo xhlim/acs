@@ -208,21 +208,20 @@ shared-dns   foo.[cluster-id].[region-id].alicontainer.com,bar.[cluster-id].[reg
     ```
 
 2.  登录[容器服务管理控制台](https://cs.console.aliyun.com)，在 Kubernetes 菜单下，在集群列表页面中，单击目标集群右侧的**控制台**，进入 Kubernetes Dashboard 页面。
-3.  登录[容器服务管理控制台](https://partners-intl.console.aliyun.com/#/cs)，在 Kubernetes 菜单下，在集群列表页面中，单击目标集群右侧的**控制台**，进入 Kubernetes Dashboard 页面。
-4.  单击**创建**，开始创建应用。
+3.  单击**创建**，开始创建应用。
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6932/4662_zh-CN.png)
 
-5.  单击**上传 YAML 或 JSON 文件**。选择刚才保存的 `nginx-ingress.yml` 文件。
-6.  单击**上传**。
+4.  单击**使用文件创建**。选择刚才保存的 `nginx-ingress.yml` 文件。
+5.  单击**上传**。
 
     这样就创建了一个 Ingress 的七层代理路由到 `http-svc` 服务上。
 
-7.  在 Kubernetes Dashboard 上定位到 default 命名空间，选择**访问权**。
+6.  在 Kubernetes Dashboard 上定位到 default 命名空间，选择**访问权**。
 
     可以看到您刚刚创建的 Ingress 资源及其访问地址 `http://118.178.174.161/svc`。
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6932/4663_zh-CN.png)
 
-8.  打开浏览器输入该地址即可访问前面创建的 `http-svc` 服务。
+7.  打开浏览器输入该地址即可访问前面创建的 `http-svc` 服务。
 
