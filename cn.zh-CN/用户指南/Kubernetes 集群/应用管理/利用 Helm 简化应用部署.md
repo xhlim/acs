@@ -40,35 +40,34 @@ Helm 采用客户端/服务器架构，由如下组件组成：
 ## 通过控制台界面部署应用 {#section_ozs_qxm_vdb .section}
 
 1.  登录[容器服务管理控制台](https://cs.console.aliyun.com)。
-2.  登录[容器服务管理控制台](https://partners-intl.console.aliyun.com/#/cs)。
-3.  在 Kubernetes 菜单下，单击左侧导航栏中的**市场** \> **应用目录**，进入应用目录列表页面。
-4.  选择一个 chart（本示例选择 WordPress），单击该 chart，进入 chart 详情页面。
+2.  在 Kubernetes 菜单下，单击左侧导航栏中的**市场** \> **应用目录**，进入应用目录列表页面。
+3.  选择一个 chart（本示例选择 WordPress），单击该 chart，进入 chart 详情页面。
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6898/4410_zh-CN.png)
 
-5.  在页面右侧，填写部署的基本信息。
+4.  在页面右侧，填写部署的基本信息。
 
     -   **集群**：应用要部署到的集群。
     -   **命名空间**：选择命名空间。默认为 default。
     -   **发布名称**：填写应用发布的名称。本例中为 test。
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6898/4411_zh-CN.png)
 
-6.  单击**参数**，对配置进行修改。
+5.  单击**参数**，对配置进行修改。
 
     本示例中将持久化存储参数从 `true` 修改为 `false`。
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6898/4417_zh-CN.png)
 
-7.  配置完成后，单击**部署**。
-8.  部署成功后，进入该应用的发布页面，找到test-wordpress服务，单击服务名称，进入 Kubernetes Dashboard。
+6.  配置完成后，单击**部署**。
+7.  部署成功后，进入该应用的发布页面，找到test-wordpress服务，单击服务名称，进入 Kubernetes Dashboard。
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6898/4418_zh-CN.png)
 
-9.  默认进入 test-wordpress 服务详情页面，您可获取 http/https 外部端点的地址。
+8.  默认进入 test-wordpress 服务详情页面，您可获取 http/https 外部端点的地址。
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6898/4419_zh-CN.png)
 
-10. 单击上面的访问地址，进入 WordPress 博客发布页面。
+9.  单击上面的访问地址，进入 WordPress 博客发布页面。
 
 ## 通过命令行部署应用 {#section_ekv_cwm_vdb .section}
 
