@@ -25,7 +25,7 @@ Working with Jenkins, Container Service automatically finishes the complete proc
 
 Elastic Compute Service \(ECS\) and Container Service together.
 
-![](images/1033_en-US.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6858/1033_en-US.png)
 
 ## Microservice architecture {#section_x24_g3w_tdb .section}
 
@@ -52,7 +52,7 @@ In the production environment of enterprises, microservices are divided reasonab
 
 ECS, Relational Database Service \(RDS\), Object Storage Service \(OSS\), and Container Service together.
 
-![](images/1037_en-US.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6858/1037_en-US.png)
 
 ## Hybrid cloud architecture {#section_af4_g3w_tdb .section}
 
@@ -79,7 +79,7 @@ Manage resources on and off the cloud at the same time in the Container Service 
 
 ECS, Virtual Private Cloud \(VPC\), and Express Connect together.
 
-![](images/1038_en-US.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6858/1038_en-US.png)
 
 ## Auto scaling architecture {#section_df4_g3w_tdb .section}
 
@@ -106,5 +106,5 @@ Container Service can automatically expand or contract the business according to
 
 ECS and CloudMonitor together.
 
-![](images/1039_en-US.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6858/1039_en-US.png)
 
