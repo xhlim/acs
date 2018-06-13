@@ -33,15 +33,14 @@
 ## 2017 年 12 月之后创建的集群 {#section_z3j_j2g_vdb .section}
 
 1.  登录 [容器服务管理控制台](https://cs.console.aliyun.com)。
-2.  登录 [容器服务管理控制台](https://partners-intl.console.aliyun.com/#/cs)
-3.  在 Kubernetes 菜单下，单击左侧导航栏中的**集群**，进入 Kubernetes 集群列表页面。
-4.  选择所需的集群并单击右侧的**管理**。
-5.  在**集群资源**中，找到您的公网负载均衡实例，并单击实例 ID，页面跳转至您的公网负载均衡实例的详细信息页面。
+2.  在 Kubernetes 菜单下，单击左侧导航栏中的**集群**，进入 Kubernetes 集群列表页面。
+3.  选择所需的集群并单击右侧的**管理**。
+4.  在**集群资源**中，找到您的公网负载均衡实例，并单击实例 ID，页面跳转至您的公网负载均衡实例的详细信息页面。
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6882/1993_zh-CN.png)
 
-6.  单击左侧导航栏中的**监听** 并单击页面右上角的**添加监听**。
-7.  添加 SSH 监听规则。
+5.  单击左侧导航栏中的**监听** 并单击页面右上角的**添加监听**。
+6.  添加 SSH 监听规则。
 
     1.  **前端协议（端口）**选择 TCP：22。
     2.  **后端协议（端口）**选择 TCP：22。
@@ -50,7 +49,7 @@
     5.  单击**下一步** 并单击**确认**，创建监听。
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6882/1990_zh-CN.png)
 
-8.  监听创建完成后，您就可以使用该负载均衡的服务地址 SSH 访问您的集群了。
+7.  监听创建完成后，您就可以使用该负载均衡的服务地址 SSH 访问您的集群了。
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6882/1991_zh-CN.png)
 
