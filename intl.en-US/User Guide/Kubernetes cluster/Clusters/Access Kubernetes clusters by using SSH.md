@@ -4,7 +4,7 @@ If you select not to enable SSH access for Internet when creating the Kubernetes
 
 ## Procedure {#section_f3q_grx_b2b .section}
 
-1.  Log on to the [Container Service console](https://partners-intl.console.aliyun.com/#/cs).
+1.  Log on to the [Container Service console](https://cs.console.aliyun.com).
 2.  Under Kubernetes, click **Clusters** in the left-side navigation pane.
 3.  Click **Manage** at the right of the cluster.
 4.  In **Cluster resource**, click the ID of the Internet SLB. Then, you are redirected to the Instance Details page of your Internet Server Load Balancer instance.
