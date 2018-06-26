@@ -10,7 +10,7 @@ This document is a quick start guide for deploying the blockchain network from t
 ## Step 1 Create a Kubernetes cluster {#section_gln_lrt_vdb .section}
 
 1.  Log on to the [Container Service console](https://partners-intl.console.aliyun.com/#/cs).
-2.  Under Kubernetes, click **Clusters** in the left-side navigation pane. Click  **Create Kubernetes Cluster** in the upper-right corner.
+2.  Under Kubernetes, click **Clusters** in the left-side navigation pane. Click **Create Kubernetes Cluster** in the upper-right corner.
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/7392/2535_en-US.png)
 
@@ -84,7 +84,7 @@ This document is a quick start guide for deploying the blockchain network from t
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/7392/2553_en-US.png)
 
     -   **Mount Point Type**: Select **VPC**.
-    -   **VPC**: Select the VPC used when creating the container cluster.
+    -   **VPC:** Select the VPC used when creating the container cluster.
     -   **VSwitch**: Select the VSwitch used when creating the container cluster.
     -   **Permission Group**: Select **VPC default permission group \(allow all\)**.
     -   Click **OK**.
@@ -120,7 +120,7 @@ This document is a quick start guide for deploying the blockchain network from t
 
 ## Step 5 Configure and deploy blockchain network {#section_lc1_zqt_vdb .section}
 
-1.  Under Kubernetes, click Store \> **App Catalog** in the left-side navigation pane. Click **incubator** on **ack-hyperledger-fabric**.
+1.  Under Kubernetes, click **Store** \> **App Catalog** in the left-side navigation pane. Click **ack-hyperledger-fabric**.
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/7392/2560_en-US.png)
 
@@ -130,12 +130,12 @@ This document is a quick start guide for deploying the blockchain network from t
 
 3.  Click the **Values** tab. View or modify the corresponding deployment parameters.
 
-    externalAddress: Enter the EIP bound to the worker node to generate the connection profile.
-
+    -   dockerImageRegistry: Enter the container image repository address in the annotations as the value according to the region in which the blockchain network is to be deployed \(inside or outside China\).
+    -   externalAddress: Enter the EIP bound to the worker node to generate the connection profile.
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/7392/2562_en-US.png)
 
 4.  Click **DEPLOY**.
-5.  Enter the cluster dashboard. Check the status of the pods related to the blockchain network. Wait until the status of all the pods becomes Running.
+5.  Enter the cluster dashboard. Check the status of the pods related to the blockchain network. Wait until the statuses of all the pods become Running.
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/7392/2563_en-US.png)
 
@@ -179,9 +179,9 @@ The Kubernetes service of the container dashboard also supports deploying the bl
 
 ## Step 8 Delete blockchain network {#section_yc1_zqt_vdb .section}
 
-1.  Under Kubernetes, click**Application** \> **Release**in the left-side navigation pane. Select the cluster from the Clusters drop-down list. Click **Delete** at the right of the release name of the blockchain network.
+1.  Under Kubernetes, click **Application** \> **Release** in the left-side navigation pane. Select the cluster from the Clusters drop-down list. Click **Delete** at the right of the release name of the blockchain network.
 
-    ![](images/6105_en-US.jpg)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/7392/6451_en-US.png)
 
 2.  Click **OK** in the displayed dialog box.
 
