@@ -26,3 +26,5 @@
     ```
 
 
+如果您遇到存储卷挂载不成功的情况，可参见[容器服务Kubernetes存储卷挂载常见问题](https://yq.aliyun.com/articles/591884)进行排查。
+
