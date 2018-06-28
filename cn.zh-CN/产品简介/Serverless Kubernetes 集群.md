@@ -2,7 +2,7 @@
 
 ## 产品简介 {#section_r2q_2gc_5db .section}
 
-阿里云 Serverless Kubernetes 让您无需管理和维护集群与服务器，即可快速创建 Kuberentes 容器应用，并且根据应用实际使用的 CPU 和内存资源量进行按需付费。使用Serverless Kubernetes，您可以专注于设计和构建应用程序，而不是管理运行应用程序的基础设施。它基于阿里云弹性计算基础架构，并且完全兼容 Kuberentes API 的解决方案，充分结合了虚拟化资源带来的安全性、弹性和 Kubernetes 生态。
+阿里云 Serverless Kubernetes 让您无需管理和维护集群与服务器，即可快速创建 Kubernetes 容器应用，并且根据应用实际使用的 CPU 和内存资源量进行按需付费。使用Serverless Kubernetes，您可以专注于设计和构建应用程序，而不是管理运行应用程序的基础设施。它基于阿里云弹性计算基础架构，并且完全兼容 Kubernetes API 的解决方案，充分结合了虚拟化资源带来的安全性、弹性和 Kubernetes 生态。
 
 阿里云 Kubernetes 服务具有两种模式，一种是经典的集群方式，一种是 Serverless 模式。
 
