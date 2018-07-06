@@ -5,8 +5,8 @@
 ## 前提条件 {#section_obh_x2p_f2b .section}
 
 -   您已有一个阿里云主账号，并拥有一个或若干个子账号，并获取子账号的UID。
--   您已开启容器服务，并创建了一个Kubernetes集群，参见[创建Kubernetes集群](intl.zh-CN/用户指南/Kubernetes 集群/集群管理/创建Kubernetes集群.md#)
--   您已成功通过Kubectl连接到Kubernetes集群，参见[通过 kubectl 连接 Kubernetes 集群](intl.zh-CN/用户指南/Kubernetes 集群/集群管理/通过 kubectl 连接 Kubernetes 集群.md#)。
+-   您已开启容器服务，并创建了一个Kubernetes集群，参见[创建Kubernetes集群](cn.zh-CN/用户指南/Kubernetes 集群/集群管理/创建Kubernetes集群.md#)
+-   您已成功通过Kubectl连接到Kubernetes集群，参见[通过 kubectl 连接 Kubernetes 集群](cn.zh-CN/用户指南/Kubernetes 集群/集群管理/通过 kubectl 连接 Kubernetes 集群.md#)。
 -   你已成功在集群中部署一个Pod，本例中创建一个名为hello-pod的示例Pod。
 
 ## 获取子账号KubeConfig {#section_ot2_4v4_f2b .section}
@@ -56,7 +56,7 @@ rules:
   resources: ["configmaps", "endpoints", "persistentvolumeclaims", "replicationcontrollers", "replicationcontrollers/scale", "secrets", "serviceaccounts", "services", "services/proxy"]
   verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
 - apiGroups: [""]
-  resources: ["bindings", "events", "limitranges", "namespaces/status", "replicationcontrollers/status", "pods/log", "pods/status", "resourcequotas", "resourcequotas/status"]
+  resources: ["bindings", "events", "limitranges", "namespaces/status", "replicationcontrollers/status", "pods/log", "pods/status", "resourcequotas", "resourcequotas/status", "componentstatuses"]
   verbs: ["get", "list", “watch"]
 - apiGroups: [""]
   resources: ["namespaces", "nodes", "persistentvolumes"]
@@ -91,7 +91,7 @@ rules:
   resources: ["configmaps", "endpoints", "persistentvolumeclaims", "replicationcontrollers", "replicationcontrollers/scale", "secrets", "serviceaccounts", "services", "services/proxy"]
   verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
 - apiGroups: [""]
-  resources: ["bindings", "events", "limitranges", "namespaces/status", "replicationcontrollers/status", "pods/log", "pods/status", "resourcequotas", "resourcequotas/status"]
+  resources: ["bindings", "events", "limitranges", "namespaces/status", "replicationcontrollers/status", "pods/log", "pods/status", "resourcequotas", "resourcequotas/status", "componentstatuses"]
   verbs: ["get", "list", “watch"]
 - apiGroups: [""]
   resources: ["namespaces"]
@@ -127,7 +127,7 @@ rules:
   verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
 - apiGroups: [""]
   resources: ["events", "namespaces/status", "replicationcontrollers/status", "pods/log", "pods/status"]
-  verbs: ["get", "list", “watch"]
+  verbs: ["get", "list", “watch", "componentstatuses"]
 - apiGroups: [""]
   resources: ["namespaces"]
   verbs: ["get", "list", “watch"]
@@ -162,7 +162,7 @@ rules:
   verbs: ["get", "list", “watch"]
 - apiGroups: [""]
   resources: ["events", "replicationcontrollers/status", "pods/log", "pods/status"]
-  verbs: ["get", "list", “watch"]
+  verbs: ["get", "list", “watch", "componentstatuses"]
 - apiGroups: ["apps"]
   resources: ["daemonsets", "deployments", "deployments/rollback", "deployments/scale", "replicasets", "replicasets/scale", "statefulsets"]
   verbs: ["get", "list", “watch"]
@@ -202,7 +202,7 @@ rules:
       resources:  ["configmaps", "endpoints", "persistentvolumeclaims", "replicationcontrollers", "replicationcontrollers/scale", "secrets", "serviceaccounts", "services", "services/proxy"]
       verbs: ["get", "list", “watch"]
     - apiGroups: [""]
-      resources:  ["events", "replicationcontrollers/status", "pods/log", "pods/status"]
+      resources:  ["events", "replicationcontrollers/status", "pods/log", "pods/status", "componentstatuses"]
       verbs: ["get", "list", “watch"]
     - apiGroups: ["apps"]
       resources:  ["daemonsets", "deployments", "deployments/rollback", "deployments/scale", "replicasets", "replicasets/scale", "statefulsets"]
