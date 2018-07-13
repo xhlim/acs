@@ -22,11 +22,11 @@ OSSFS 是阿里云官方提供的基于 FUSE 的文件系统（项目主页见[h
 
     ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/7077/5050_zh-CN.png)
 
-    如果您的 Agent 版本低于 0.6，请先升级您的 Agent。有关如何升级 Agent，参见[升级 Agent](intl.zh-CN/用户指南/Swarm 集群/集群管理/升级 Agent.md#)。
+    如果您的 Agent 版本低于 0.6，请先升级您的 Agent。有关如何升级 Agent，参见[升级 Agent](cn.zh-CN/用户指南/Swarm 集群/集群管理/升级 Agent.md#)。
 
 -   集群里部署了 acsvolumedriver 应用。建议您将 acsvolumedriver 升级到最新版本。
 
-    您可以通过升级系统服务部署和升级 acsvolumedriver 应用。详细操作参见[升级系统服务](intl.zh-CN/用户指南/Swarm 集群/集群管理/升级系统服务.md#)。
+    您可以通过升级系统服务部署和升级 acsvolumedriver 应用。详细操作参见[升级系统服务](cn.zh-CN/用户指南/Swarm 集群/集群管理/升级系统服务.md#)。
 
     **说明：** 升级或重启 acsvolumedriver 时，使用 OSSFS 数据卷的容器会重启，您的服务也会重启。
 
@@ -64,5 +64,5 @@ OSSFS 是阿里云官方提供的基于 FUSE 的文件系统（项目主页见[h
 
 ## 后续操作 {#section_m5g_yjt_xdb .section}
 
-创建数据卷之后，您可以在您的应用中使用创建的数据卷。有关如何在应用中使用数据卷，参见[使用第三方数据卷](intl.zh-CN/用户指南/Swarm 集群/数据卷管理/使用第三方数据卷.md#)。
+创建数据卷之后，您可以在您的应用中使用创建的数据卷。有关如何在应用中使用数据卷，参见[使用第三方数据卷](cn.zh-CN/用户指南/Swarm 集群/数据卷管理/使用第三方数据卷.md#)。
 
