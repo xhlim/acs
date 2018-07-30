@@ -31,9 +31,9 @@ Log-Pilot 支持容器事件管理，它能够动态地监听容器的事件变�
     -   第一种约定关键字 stdout 表示的是采集容器的标准输出日志，如本例中我们要采集 tomcat 容器日志，那么我们通过配置标签 `aliyun.logs.catalina=stdout` 来采集 tomcat 标准输出日志。
     -   第二种是容器内部日志文件的路径，也支持通配符的方式，通过配置环境变量 `aliyun_logs_access=/usr/local/tomcat/logs/*.log`来采集 tomcat 容器内部的日志。当然如果你不想使用 aliyun 这个关键字，Log-Pilot 也提供了环境变量 PILOT\_LOG\_PREFIX 可以指定自己的声明式日志配置前缀，比如 `PILOT_LOG_PREFIX: "aliyun,custom"`。
 
-此外，Log-Pilot 还支持多种日志解析格式，通过 `aliyun_logs_$name.format=<format>` 标签就可以告诉 Log-Pilot 在采集日志的时候，同时以什么样的格式来解析日志记录，支持的格式包括：none、json、csv、nginx、apache2 和 regxp。
+此外，Log-Pilot 还支持多种日志解析格式，通过 `aliyun_logs_$name_format=<format>` 标签就可以告诉 Log-Pilot 在采集日志的时候，同时以什么样的格式来解析日志记录，支持的格式包括：none、json、csv、nginx、apache2 和 regxp。
 
-Log-Pilot 同时支持自定义 tag，我们可以在环境变量里配置 `aliyun_logs_$name.tags="K1=V1,K2=V2"`，那么在采集日志的时候也会将 K1=V1 和 K2=V2 采集到容器的日志输出中。自定义 tag 可帮助您给日志产生的环境打上 tag，方便进行日志统计、日志路由和日志过滤。
+Log-Pilot 同时支持自定义 tag，我们可以在环境变量里配置 `aliyun_logs_$name_tags="K1=V1,K2=V2"`，那么在采集日志的时候也会将 K1=V1 和 K2=V2 采集到容器的日志输出中。自定义 tag 可帮助您给日志产生的环境打上 tag，方便进行日志统计、日志路由和日志过滤。
 
 ## 日志采集模式 {#section_iys_gkb_wdb .section}
 
@@ -41,7 +41,7 @@ Log-Pilot 同时支持自定义 tag，我们可以在环境变量里配置 `aliy
 
 该方案跟在每个 Pod 中都部署一个 logging 容器的模式相比，最明显的优势就是占用资源较少，在集群规模比较大的情况下表现出的优势越明显，这也是社区推荐的一种模式。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6945/4695_zh-CN.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6945/15329208204695_zh-CN.png)
 
 ## 前提条件 {#section_kys_gkb_wdb .section}
 
@@ -50,141 +50,13 @@ Log-Pilot 同时支持自定义 tag，我们可以在环境变量里配置 `aliy
 ## 步骤1 部署 elasticsearch {#section_xml_n11_12b .section}
 
 1.  连接到您的 Kubernetes 集群。具体操作参见通过[创建Kubernetes集群](intl.zh-CN/用户指南/Kubernetes 集群/集群管理/创建Kubernetes集群.md#) 或 [SSH 访问 Kubernetes 集群](intl.zh-CN/用户指南/Kubernetes 集群/集群管理/SSH访问Kubernetes集群.md#)。
-2.  首先部署 elasticsearch 相关的资源对象。
+2.  首先部署 elasticsearch 相关服务，该编排模板包含一个 elasticsearch-api 的服务、elasticsearch-discovery 的服务和 elasticsearch 的状态集，这些对象都会部署在 kube-system 命名空间下。
 
     ```
-    vim elasticsearch.yaml
+    kubectl apply -f https://acs-logging.oss-cn-hangzhou.aliyuncs.com/elasticsearch.yml
     ```
 
-3.  然后输入如下所示的编排模板，该编排模板包含一个 elasticsearch-api 的服务、elasticsearch-discovery 的服务和 elasticsearch 的状态集。这些对象都会部署在 kube-system 命名空间下。
-
-    ```
-    ---
-     apiVersion: v1
-     kind: Service
-     metadata:
-       name: elasticsearch-api
-       namespace: kube-system
-       labels:
-         name: elasticsearch
-     spec:
-       selector:
-         app: es
-       ports:
-       - name: transport
-         port: 9200
-         protocol: TCP
-     ---
-     apiVersion: v1
-     kind: Service
-     metadata:
-       name: elasticsearch-discovery
-       namespace: kube-system
-       labels:
-         name: elasticsearch
-     spec:
-       selector:
-         app: es
-       ports:
-       - name: transport
-         port: 9300
-         protocol: TCP
-     ---
-     apiVersion: apps/v1beta1
-     kind: StatefulSet
-     metadata:
-       name: elasticsearch
-       namespace: kube-system
-       labels:
-         kubernetes.io/cluster-service: "true"
-     spec:
-       replicas: 3               #高可用，允许宕机一台节点以满足容灾需求
-       serviceName: "elasticsearch-service"
-       selector:
-         matchLabels:
-           app: es
-       template:
-         metadata:
-           labels:
-             app: es
-         spec:
-           tolerations:
-           - key: node-role.kubernetes.io/master
-             effect: NoSchedule
-           serviceAccountName: admin
-           initContainers:
-           - name: init-sysctl
-             image: busybox:1.27
-             command:
-             - sysctl
-             - -w
-             - vm.max_map_count=262144
-             securityContext:
-               privileged: true
-           containers:
-           - name: elasticsearch
-             image: registry.cn-hangzhou.aliyuncs.com/cqz/elasticsearch:5.5.1
-             ports:
-             - containerPort: 9200
-               protocol: TCP
-             - containerPort: 9300
-               protocol: TCP
-             securityContext:
-               capabilities:
-                 add:
-                   - IPC_LOCK
-                   - SYS_RESOURCE
-             resources:
-               limits:
-                 memory: 4000Mi
-               requests:
-                 cpu: 100m
-                 memory: 2000Mi
-             env:                                       #部分参数可根据您的需要进行修改
-               - name: "http.host"
-                 value: "0.0.0.0"
-               - name: "network.host"
-                 value: "_eth0_"
-               - name: "cluster.name"
-                 value: "docker-cluster"
-               - name: "bootstrap.memory_lock"
-                 value: "false"
-               - name: "discovery.zen.ping.unicast.hosts"
-                 value: "elasticsearch-discovery"
-               - name: "discovery.zen.ping.unicast.hosts.resolve_timeout"
-                 value: "10s"
-               - name: "discovery.zen.ping_timeout"
-                 value: "6s"
-               - name: "discovery.zen.minimum_master_nodes"
-                 value: "2"
-               - name: "discovery.zen.fd.ping_interval"
-                 value: "2s"
-               - name: "discovery.zen.no_master_block"
-                 value: "write"
-               - name: "gateway.expected_nodes"
-                 value: "2"
-               - name: "gateway.expected_master_nodes"
-                 value: "1"
-               - name: "transport.tcp.connect_timeout"
-                 value: "60s"
-               - name: "ES_JAVA_OPTS"
-                 value: "-Xms2g -Xmx2g"
-             livenessProbe:
-               tcpSocket:
-                 port: transport
-               initialDelaySeconds: 20
-               periodSeconds: 10
-             volumeMounts:
-             - name: es-data
-               mountPath: /data
-           terminationGracePeriodSeconds: 30
-           volumes:
-           - name: es-data
-             hostPath:
-               path: /es-data
-    ```
-
-4.  部署成功后，kube-system 命名空间下会出现相关对象，执行以下命令查看运行情况。
+3.  部署成功后，kube-system 命名空间下会出现相关对象，执行以下命令查看运行情况。
 
     ```
     $ kubectl get svc,StatefulSet -n=kube-system
@@ -193,141 +65,22 @@ Log-Pilot 同时支持自定义 tag，我们可以在环境变量里配置 `aliy
      svc/elasticsearch-discovery   ClusterIP      172.21.13.91    <none>          9300/TCP                     22h
      ...
      NAME                         DESIRED   CURRENT   AGE
-     statefulsets/elasticsearch   2         2         22h
+     statefulsets/elasticsearch   3      3      22h
     ```
 
 
 ## 步骤2 部署 log-pilot 和 kibana 服务 {#section_fgg_511_12b .section}
 
-1.  部署 log-pilot 日志采集工具，编排模板如下所示。
+1.  部署 log-pilot 日志采集工具，如下所示：
 
     ```
-    –-
-     apiVersion: extensions/v1beta1
-     kind: DaemonSet
-     metadata:
-       name: log-pilot
-       namespace: kube-system
-       labels:
-         k8s-app: log-pilot
-         kubernetes.io/cluster-service: "true"
-     spec:
-       template:
-         metadata:
-           labels:
-             k8s-app: log-es
-             kubernetes.io/cluster-service: "true"
-             version: v1.22
-         spec:
-           tolerations:
-           - key: node-role.kubernetes.io/master
-             effect: NoSchedule
-           serviceAccountName: admin
-           containers:
-           - name: log-pilot
-             image: registry.cn-hangzhou.aliyuncs.com/acs-sample/log-pilot:0.9-filebeat
-             resources:
-               limits:
-                 memory: 200Mi
-               requests:
-                 cpu: 100m
-                 memory: 200Mi
-             env:
-               - name: "FILEBEAT_OUTPUT"
-                 value: "elasticsearch"
-               - name: "ELASTICSEARCH_HOST"
-                 value: "elasticsearch-api"
-               - name: "ELASTICSEARCH_PORT"
-                 value: "9200"
-               - name: "ELASTICSEARCH_USER"
-                 value: "elastic"
-               - name: "ELASTICSEARCH_PASSWORD"
-                 value: "changeme"
-             volumeMounts:
-             - name: sock
-               mountPath: /var/run/docker.sock
-             - name: root
-               mountPath: /host
-               readOnly: true
-             - name: varlib
-               mountPath: /var/lib/filebeat
-             - name: varlog
-               mountPath: /var/log/filebeat
-             securityContext:
-               capabilities:
-                 add:
-                 - SYS_ADMIN
-           terminationGracePeriodSeconds: 30
-           volumes:
-           - name: sock
-             hostPath:
-               path: /var/run/docker.sock
-           - name: root
-             hostPath:
-               path: /
-           - name: varlib
-             hostPath:
-               path: /var/lib/filebeat
-               type: DirectoryOrCreate
-           - name: varlog
-             hostPath:
-               path: /var/log/filebeat
-               type: DirectoryOrCreate
+    kubectl apply -f https://acs-logging.oss-cn-hangzhou.aliyuncs.com/log-pilot.yml
     ```
 
 2.  部署 kibana 服务，该编排示例包含一个 service 和一个 deployment。
 
     ```
-    ---
-     apiVersion: v1
-     kind: Service
-     metadata:
-       name: kibana                             #kibana 服务的名称
-       namespace: kube-system
-       labels:
-         component: kibana
-     spec:
-       selector:
-         component: kibana
-       ports:
-       - name: http
-         port: 80                                #kibana 服务暴露的端口
-         targetPort: http
-       type: NodePort
-     ---
-     apiVersion: apps/v1beta1
-     kind: Deployment
-     metadata:
-       name: kibana
-       namespace: kube-system
-       labels:
-         component: kibana
-     spec:
-       replicas: 1
-       selector:
-         matchLabels:
-          component: kibana
-       template:
-         metadata:
-           labels:
-             component: kibana
-         spec:
-           containers:
-           - name: kibana
-             image: registry.cn-hangzhou.aliyuncs.com/acs-sample/kibana:5.5.1
-             env:
-             - name: CLUSTER_NAME
-               value: docker-cluster
-             - name: ELASTICSEARCH_URL
-               value: http://elasticsearch-api:9200/                #端口要与 elasticsearch-api 服务暴露的端口一致
-             resources:
-               limits:
-                 cpu: 1000m
-               requests:
-                 cpu: 100m
-             ports:
-             - containerPort: 5601
-               name: http
+    kubectl apply -f https://acs-logging.oss-cn-hangzhou.aliyuncs.com/kibana.yml
     ```
 
 
@@ -401,7 +154,7 @@ tomcat 镜像属于少数同时使用了 stdout 和文件日志的 Docker 镜像
 
 3.  在浏览器中访问该地址，如下所示。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6945/4696_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6945/15329208204696_zh-CN.png)
 
 4.  单击左侧导航栏中的**management**，然后单击**Index Patterns** \> **Create Index Pattern**。具体的索引名称会在 `$name` 变量后缀一个时间字符串，您可以配合通配符 `*` 进行创建。本例中使用 `$name*` 来创建 Index Pattern。
 
@@ -421,7 +174,7 @@ tomcat 镜像属于少数同时使用了 stdout 和文件日志的 Docker 镜像
 
 5.  索引创建完毕后，单击左侧导航栏中的**Discover**，然后选择前面创建的 Index，选择合适的时间段，在搜索栏输入相关字段，就可以查询相关的日志。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6945/4697_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/6945/15329208204697_zh-CN.png)
 
 
 至此，在阿里云 Kubernetes 集群上，我们已经成功测试基于 log-pilot、elasticsearch 和 kibana 的日志解决方案，通过这个方案，我们能有效应对分布式 kubernetes 集群日志需求，可以帮助提升运维和运营效率，保障系统持续稳定运行。
